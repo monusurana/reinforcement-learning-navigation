@@ -37,7 +37,7 @@ The task is episodic, and in order to solve the environment, your agent must get
 Execute `Navigation.ipynb` to train your own agent! It currently support three algorithms:
 - DQN ([Paper](https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf))
 - Double DQN ([Paper](https://arxiv.org/pdf/1509.06461.pdf))
-- Duleing DQN ([Paper](https://arxiv.org/pdf/1511.06581.pdf))
+- Dueling DQN ([Paper](https://arxiv.org/pdf/1511.06581.pdf))
 
 The entire notebook can be executed by pressing play icon
 
