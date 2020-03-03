@@ -94,6 +94,15 @@ This is how the decaying 𝛆 looks like (it decays from 1.0 to 0.01 and then st
 
 You can find the 𝛆-greedy logic implemented as part of the ```act()``` method in ```dqn_agent.py``` of the source code.
 
+#### Code snippet 
+```
+# Epsilon-greedy action selection
+if random.random() > eps:
+    return np.argmax(action_values.cpu().data.numpy())
+else:
+    return random.choice(np.arange(self.action_size))
+```
+
 ### Target Network 
 
 Iterative update that adjusts the action-values towards target values that are only periodically updated, thereby reducing correlations with the target.
