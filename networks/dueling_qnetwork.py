@@ -3,8 +3,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class DuelingQNetwork(nn.Module):
-    """Actor (Policy) Model."""
-
     def __init__(self, state_size, action_size, seed):
         """Initialize parameters and build model.
         Params
@@ -37,6 +35,6 @@ class DuelingQNetwork(nn.Module):
     def forward(self, x):
         x = self.feature(x)
         advantage = self.advantage(x)
-        value     = self.value(x)
+        value = self.value(x)
         
         return value + advantage - advantage.mean()
