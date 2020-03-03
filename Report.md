@@ -17,7 +17,7 @@ Implemented and trained three different algorithms for the same Banana environme
 
 The implementation of dqn is in ```agents/dqn_agent.py``` and the trained model can be found at ```models/checkpoint_dqn.pth```
 
-#### Network
+#### Network Architecture
 ```
 QNetwork(
   (fc1): Linear(in_features=37, out_features=64, bias=True)
@@ -34,7 +34,7 @@ This is an enhancement on top of DQN, primarily focused on how the target networ
 
 The implementation of double dqn is in ```agents/double_dqn_agent.py``` and the trained model can be found at ```models/checkpoint_doubledqn.pth```
 
-#### Network
+#### Network Architecture
 ```
 QNetwork(
   (fc1): Linear(in_features=37, out_features=64, bias=True)
@@ -49,7 +49,7 @@ QNetwork(
 
 The implementation of dueling dqn is in ```agents/dueling_dqn_agent.py``` and the trained model can be found at ```models/checkpoint_duelingdqn.pth```
 
-#### Network
+#### Network Architecture
 ```
 DuelingQNetwork(
   (feature): Sequential(
@@ -76,9 +76,7 @@ These are the common pieces for all the algorithms, primariliy inspired by the o
 
 ### Experience Replay 
 
-Experience replay allows the RL agent to learn from past experience.
-
-Each experience is stored in a replay buffer as the agent interacts with the environment. The replay buffer contains a collection of experience tuples with the state, action, reward, and next state ```(s, a, r, s')```. The agent then samples from this buffer as part of the learning step. Experiences are sampled randomly, so that the data is uncorrelated. This prevents action values from oscillating or diverging catastrophically, since a naive Q-learning algorithm could otherwise become biased by correlations between sequential experience tuples.
+Experience replay allows the RL agent to learn from past experiences. Each experience is stored in a replay buffer as the agent interacts with the environment. The replay buffer contains experience tuples with the state, action, reward, and next state ```(s, a, r, s')```. The agent randomly samples from this buffer as part of the training. Random samplaing helps with the problem of correlated data. This prevents action values from oscillating, since a naive Q-learning algorithm could otherwise become biased by correlations between sequential experience tuples.
 
 Also, experience replay improves learning through repetition. By doing multiple passes over the data, our agent has multiple opportunities to learn from a single experience tuple. This is particularly useful for state-action pairs that occur infrequently within the environment.
 
@@ -86,11 +84,9 @@ The implementation of the replay buffer can be found here in the ```buffers/Repl
 
 ### Decaying Epsilon Greedy 
 
-One challenge with the Q-function above is choosing which action to take while the agent is still learning the optimal policy. Should the agent choose an action based on the Q-values observed thus far? Or, should the agent try a new action in hopes of earning a higher reward? This is known as the exploration vs. exploitation dilemma.
+𝛆-greedy algorithm helps with the exploration vs. exploitation trade-off. The agent "explores" by picking a random action with some probability epsilon 𝛜. However, the agent continues to "exploit" its knowledge of the environment by choosing actions based on the policy with probability (1-𝛜).
 
-To address this, I implemented an 𝛆-greedy algorithm. This algorithm allows the agent to systematically manage the exploration vs. exploitation trade-off. The agent "explores" by picking a random action with some probability epsilon 𝛜. However, the agent continues to "exploit" its knowledge of the environment by choosing actions based on the policy with probability (1-𝛜).
-
-Furthermore, the value of epsilon is purposely decayed over time, so that the agent favors exploration during its initial interactions with the environment, but increasingly favors exploitation as it gains more experience. The starting and ending values for epsilon, and the rate at which it decays are three hyperparameters that are later tuned during experimentation.
+The value of epsilon is decayed over time, so that the agent favors exploration during its initial interactions with the environment, but increasingly favors exploitation as it gains more experience.
 
 This is how the decaying 𝛆 looks like (it decays from 1.0 to 0.01 and then stays there):
 
@@ -108,6 +104,27 @@ The target values are updated based on this equation.
 ```
 
 You can find logic implemented in ```soft_update()``` method in ```dqn_agent.py``` of the source code. 
+
+## Hyperparameters 
+
+The agent uses these parameters
+```
+BUFFER_SIZE = int(1e5)  # replay buffer size
+BATCH_SIZE = 64         # minibatch size
+GAMMA = 0.99            # discount factor
+TAU = 1e-3              # for soft update of target parameters
+LR = 5e-4               # learning rate 
+UPDATE_EVERY = 4        # how often to update the network
+```
+
+The training part uses these paramters
+```
+Number of training episodes = 2000
+Max number of steps in an episode = 1000
+Epsilon start vale = 1.0
+Epsilon end value = 0.01
+Epsilon decay rate = 0.995
+```
 
 ## Results
 
