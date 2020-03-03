@@ -15,7 +15,7 @@ Implemented and trained three different algorithms for the same Banana environme
 
 ### DQN 
 
-The implementation of dqn is in ```agents/dqn_agent.py``` 
+The implementation of dqn is in ```agents/dqn_agent.py``` and the trained model can be found at ```models/checkpoint_dqn.pth```
 
 #### Network
 ```
@@ -32,7 +32,7 @@ QNetwork(
 
 This is an enhancement on top of DQN, primarily focused on how the target network in updated. 
 
-The implementation of double dqn is in ```agents/double_dqn_agent.py``` 
+The implementation of double dqn is in ```agents/double_dqn_agent.py``` and the trained model can be found at ```models/checkpoint_doubledqn.pth```
 
 #### Network
 ```
@@ -47,7 +47,7 @@ QNetwork(
 
 ### Dueling DQN 
 
-The implementation of dueling dqn is in ```agents/dueling_dqn_agent.py``` 
+The implementation of dueling dqn is in ```agents/dueling_dqn_agent.py``` and the trained model can be found at ```models/checkpoint_duelingdqn.pth```
 
 #### Network
 ```
@@ -84,7 +84,7 @@ Also, experience replay improves learning through repetition. By doing multiple 
 
 The implementation of the replay buffer can be found here in the ```buffers/ReplayBuffer.py``` file of the source code.
 
-### Decaying Epision Greedy 
+### Decaying Epsilon Greedy 
 
 One challenge with the Q-function above is choosing which action to take while the agent is still learning the optimal policy. Should the agent choose an action based on the Q-values observed thus far? Or, should the agent try a new action in hopes of earning a higher reward? This is known as the exploration vs. exploitation dilemma.
 
@@ -111,11 +111,13 @@ You can find logic implemented in ```soft_update()``` method in ```dqn_agent.py`
 
 ## Results
 
-### Comparison of different Deep Q-Network Algorithms
+### Results for all the algorithms
+<img src="resources/dqn.png" width="280" height="200"><img src="resources/doubledqn.png" width="280" height="200"><img src="resources/duelingdqn.png" width="280" height="200">
 
+### Comparison of average score for different Deep Q-Network Algorithms
 ![DQN Trained Agent](resources/comparision.png)
 
 ## Ideas for future work 
 - Tuning of hyperparameters for the network 
-- Use Prioritized Experience Replay 
-- Implement Rainbow Paper
+- Use Prioritized Experience Replay ([Link](https://arxiv.org/pdf/1511.05952.pdf))
+- Implement Rainbow Paper ([Link](https://arxiv.org/pdf/1710.02298.pdf))
